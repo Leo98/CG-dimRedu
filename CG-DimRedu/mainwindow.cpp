@@ -1,10 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "planocartesiano.h"
 #include <QString>
 #include <QPlainTextEdit>
 #include <QDebug>
 #include <QTime>
 #include <sstream>
+#include <QPainter>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -13,6 +15,10 @@ MainWindow::MainWindow(QWidget *parent) :
     textoMatriz = stringMatrizAleatoria(textoMatriz);
     ui->setupUi(this);
     ui->displayMatrizes->setPlainText(textoMatriz);
+
+    connect(ui->widgetPlanCartesiano, SIGNAL(mudaRotacaoX(int)), ui->sliderEixoX, SLOT(setValue(int)));
+    connect(ui->widgetPlanCartesiano, SIGNAL(mudaRotacaoY(int)), ui->sliderEixoY, SLOT(setValue(int)));
+    connect(ui->widgetPlanCartesiano, SIGNAL(mudaRotacaoZ(int)), ui->sliderEixoZ, SLOT(setValue(int)));
 
 }
 
@@ -42,5 +48,14 @@ QString MainWindow::stringMatrizAleatoria(QString string)
     }
     string += QString("\n ]");
     return string;
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Escape)
+            close();
+        else
+            QWidget::keyPressEvent(event);
+
 }
 

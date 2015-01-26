@@ -19,6 +19,9 @@ public:
 
     QString stringMatrizAleatoria(QString string);
 
+protected:
+    void keyPressEvent(QKeyEvent *event);
+
 private:
     Ui::MainWindow *ui;
     QString textoMatriz = "";
