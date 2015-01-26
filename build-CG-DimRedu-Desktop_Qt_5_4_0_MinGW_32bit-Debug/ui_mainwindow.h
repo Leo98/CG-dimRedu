@@ -15,7 +15,6 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
-#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -25,7 +24,6 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
@@ -62,13 +60,6 @@ public:
     QCheckBox *exibirCentroide;
     QCheckBox *exibirTodosDados;
     QSpacerItem *verticalSpacer;
-    QFormLayout *formLayout;
-    QLabel *labelEixoX;
-    QLabel *labelEixoY;
-    QLabel *labelEixoZ;
-    QSlider *sliderEixoY;
-    QSlider *sliderEixoZ;
-    QSlider *sliderEixoX;
     QMenuBar *menuBar;
     QMenu *menuInserir_Dados;
     QMenu *menuSobre;
@@ -198,64 +189,6 @@ public:
 
         verticalLayout->addLayout(LayouMeio);
 
-        formLayout = new QFormLayout();
-        formLayout->setSpacing(6);
-        formLayout->setObjectName(QStringLiteral("formLayout"));
-        labelEixoX = new QLabel(centralWidget);
-        labelEixoX->setObjectName(QStringLiteral("labelEixoX"));
-
-        formLayout->setWidget(1, QFormLayout::LabelRole, labelEixoX);
-
-        labelEixoY = new QLabel(centralWidget);
-        labelEixoY->setObjectName(QStringLiteral("labelEixoY"));
-
-        formLayout->setWidget(2, QFormLayout::LabelRole, labelEixoY);
-
-        labelEixoZ = new QLabel(centralWidget);
-        labelEixoZ->setObjectName(QStringLiteral("labelEixoZ"));
-
-        formLayout->setWidget(3, QFormLayout::LabelRole, labelEixoZ);
-
-        sliderEixoY = new QSlider(centralWidget);
-        sliderEixoY->setObjectName(QStringLiteral("sliderEixoY"));
-        sliderEixoY->setMaximum(360);
-        sliderEixoY->setSingleStep(16);
-        sliderEixoY->setPageStep(15);
-        sliderEixoY->setSliderPosition(0);
-        sliderEixoY->setOrientation(Qt::Horizontal);
-        sliderEixoY->setTickPosition(QSlider::TicksAbove);
-        sliderEixoY->setTickInterval(15);
-
-        formLayout->setWidget(2, QFormLayout::FieldRole, sliderEixoY);
-
-        sliderEixoZ = new QSlider(centralWidget);
-        sliderEixoZ->setObjectName(QStringLiteral("sliderEixoZ"));
-        sliderEixoZ->setMaximum(360);
-        sliderEixoZ->setSingleStep(16);
-        sliderEixoZ->setPageStep(15);
-        sliderEixoZ->setSliderPosition(0);
-        sliderEixoZ->setOrientation(Qt::Horizontal);
-        sliderEixoZ->setTickPosition(QSlider::TicksAbove);
-        sliderEixoZ->setTickInterval(15);
-
-        formLayout->setWidget(3, QFormLayout::FieldRole, sliderEixoZ);
-
-        sliderEixoX = new QSlider(centralWidget);
-        sliderEixoX->setObjectName(QStringLiteral("sliderEixoX"));
-        sliderEixoX->setMinimum(-360);
-        sliderEixoX->setMaximum(360);
-        sliderEixoX->setSingleStep(45);
-        sliderEixoX->setPageStep(720);
-        sliderEixoX->setSliderPosition(0);
-        sliderEixoX->setOrientation(Qt::Horizontal);
-        sliderEixoX->setTickPosition(QSlider::TicksAbove);
-        sliderEixoX->setTickInterval(36);
-
-        formLayout->setWidget(1, QFormLayout::FieldRole, sliderEixoX);
-
-
-        verticalLayout->addLayout(formLayout);
-
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -279,9 +212,6 @@ public:
         menuSobre->addAction(actionSobre);
 
         retranslateUi(MainWindow);
-        QObject::connect(sliderEixoX, SIGNAL(valueChanged(int)), widgetPlanCartesiano, SLOT(setRotacaoX(int)));
-        QObject::connect(sliderEixoY, SIGNAL(valueChanged(int)), widgetPlanCartesiano, SLOT(setRotacaoY(int)));
-        QObject::connect(sliderEixoZ, SIGNAL(valueChanged(int)), widgetPlanCartesiano, SLOT(setRotacaoZ(int)));
 
         tabelaDeVisualizacao->setCurrentIndex(0);
 
@@ -309,9 +239,6 @@ public:
         tabelaDeVisualizacao->setTabText(tabelaDeVisualizacao->indexOf(matrizDados), QApplication::translate("MainWindow", "Matriz de Dados", 0));
         exibirCentroide->setText(QApplication::translate("MainWindow", "Exibir Centroide", 0));
         exibirTodosDados->setText(QApplication::translate("MainWindow", "Exibir todos os dados", 0));
-        labelEixoX->setText(QApplication::translate("MainWindow", "Eixo X", 0));
-        labelEixoY->setText(QApplication::translate("MainWindow", "Eixo Y", 0));
-        labelEixoZ->setText(QApplication::translate("MainWindow", "Eixo Z", 0));
         menuInserir_Dados->setTitle(QApplication::translate("MainWindow", "Inserir Dados", 0));
         menuSobre->setTitle(QApplication::translate("MainWindow", "Ajuda", 0));
     } // retranslateUi

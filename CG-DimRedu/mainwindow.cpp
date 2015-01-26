@@ -15,11 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
     textoMatriz = stringMatrizAleatoria(textoMatriz);
     ui->setupUi(this);
     ui->displayMatrizes->setPlainText(textoMatriz);
-
-    connect(ui->widgetPlanCartesiano, SIGNAL(mudaRotacaoX(int)), ui->sliderEixoX, SLOT(setValue(int)));
-    connect(ui->widgetPlanCartesiano, SIGNAL(mudaRotacaoY(int)), ui->sliderEixoY, SLOT(setValue(int)));
-    connect(ui->widgetPlanCartesiano, SIGNAL(mudaRotacaoZ(int)), ui->sliderEixoZ, SLOT(setValue(int)));
-
 }
 
 MainWindow::~MainWindow()
