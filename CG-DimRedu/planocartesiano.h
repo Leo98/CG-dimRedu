@@ -17,19 +17,15 @@ protected:
     void paintGL();
     void resizeGL(int width, int height);
 
-    QSize minimumSizeHint() const;
-    QSize sizeHint() const;
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
 
 signals:
-    //sinais para rotação a partir do movimento do mouse
     void mudaRotacaoX(int angulo);
     void mudaRotacaoY(int angulo);
     void mudaRotacaoZ(int angulo);
 
 public slots:
-    // slots para a rotação xyz no slider
     void setRotacaoX(int angulo);
     void setRotacaoY(int angulo);
     void setRotacaoZ(int angulo);

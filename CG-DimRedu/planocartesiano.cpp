@@ -56,17 +56,6 @@ void PlanoCartesiano::resizeGL(int width, int height)
 
 }
 
-QSize PlanoCartesiano::minimumSizeHint() const
-{
-    return QSize(50, 50);
-}
-
-QSize PlanoCartesiano::sizeHint() const
-{
-    return QSize(400, 400);
-
-}
-
 void PlanoCartesiano::mousePressEvent(QMouseEvent *event)
 {
     ultimaPosicao = event->pos();
@@ -130,39 +119,61 @@ void PlanoCartesiano::setRotacaoZ(int angulo)
 
 void PlanoCartesiano::draw()
 {
-    glColor3d(255,0,0);
-        glBegin(GL_QUADS);
-            glNormal3f(0,0,-1);
-            glVertex3f(-1,-1,0);
-            glVertex3f(-1,1,0);
-            glVertex3f(1,1,0);
-            glVertex3f(1,-1,0);
+    //eixo X
+    glBegin(GL_LINES);
+        glVertex3f(0,0,0);
+        glVertex3f(1,0,0);
+    glEnd();
+    for(float x = 0.2; x<=1; x+=0.2)
+    {
+        glBegin(GL_LINES);
+            glVertex3f(x, 0, 0);
+            glVertex3f(x, 0.02, 0);
+        glEnd();
+        glBegin(GL_LINES);
+            glVertex3f(x, 0, 0);
+            glVertex3f(x, 0, 0.02);
+        glEnd();
+    }
+    //eixo Y
+    glBegin(GL_LINES);
+        glVertex3f(0,0,0);
+        glVertex3f(0,1,0);
+    glEnd();
+    for(float y = 0.2; y<=1; y+=0.2)
+    {
+        glBegin(GL_LINES);
+            glVertex3f(0, y, 0);
+            glVertex3f(0.02, y, 0);
+        glEnd();
+        glBegin(GL_LINES);
+            glVertex3f(0, y, 0);
+            glVertex3f(0, y, 0.02);
+        glEnd();
+    }
+    //eixo Z
+    glBegin(GL_LINES);
+        glVertex3f(0,0,0);
+        glVertex3f(0,0,1);
+    glEnd();
+    for(float z = 0.2; z<=1; z+=0.2)
+    {
+        glBegin(GL_LINES);
+            glVertex3f(0, 0, z);
+            glVertex3f(0, 0.02, z);
+        glEnd();
+        glBegin(GL_LINES);
+            glVertex3f(0, 0, z);
+            glVertex3f(0.02, 0, z);
+        glEnd();
+    }
 
-        glEnd();
-        glBegin(GL_TRIANGLES);
-            glNormal3f(0,-1,0.707);
-            glVertex3f(-1,-1,0);
-            glVertex3f(1,-1,0);
-            glVertex3f(0,0,1.2);
-        glEnd();
-        glBegin(GL_TRIANGLES);
-            glNormal3f(1,0, 0.707);
-            glVertex3f(1,-1,0);
-            glVertex3f(1,1,0);
-            glVertex3f(0,0,1.2);
-        glEnd();
-        glBegin(GL_TRIANGLES);
-            glNormal3f(0,1,0.707);
-            glVertex3f(1,1,0);
-            glVertex3f(-1,1,0);
-            glVertex3f(0,0,1.2);
-        glEnd();
-        glBegin(GL_TRIANGLES);
-            glNormal3f(-1,0,0.707);
-            glVertex3f(-1,1,0);
-            glVertex3f(-1,-1,0);
-            glVertex3f(0,0,1.2);
-        glEnd();
+    //Points
+    glBegin(GL_POINTS);
+        glVertex3f(1,1,1);
+        glVertex3f(1, 5, 3);
+        glVertex3f(3,2,8);
+    glEnd();
 
 }
 
