@@ -4,12 +4,13 @@
 #include <QMainWindow>
 #include <QString>
 #include <QtOpenGL/QGL>
+#include "matrizes.h"
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, protected Matrizes
 {
     Q_OBJECT
 
@@ -17,14 +18,17 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    QString stringMatrizAleatoria(QString string);
-
 protected:
     void keyPressEvent(QKeyEvent *event);
 
+public slots:
+    void zoomIn(int level = 1);
+    void zoomOut(int level = 1);
+    void setupMatrix();
+
 private:
     Ui::MainWindow *ui;
-    QString textoMatriz = "";
+
 };
 
 #endif // MAINWINDOW_H

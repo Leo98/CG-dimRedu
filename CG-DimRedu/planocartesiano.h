@@ -4,8 +4,10 @@
 #include <QWidget>
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+#include <mainwindow.h>
+#include "matrizes.h"
 
-class PlanoCartesiano : public QOpenGLWidget
+class PlanoCartesiano : public QOpenGLWidget, protected Matrizes
 {
     Q_OBJECT
 public:

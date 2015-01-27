@@ -1,48 +1,44 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "planocartesiano.h"
+#include "MainWindow.h"
 #include <QString>
 #include <QPlainTextEdit>
 #include <QDebug>
 #include <QTime>
-#include <sstream>
 #include <QPainter>
+#include <QtMath>
+#include <QMatrix>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    textoMatriz = stringMatrizAleatoria(textoMatriz);
     ui->setupUi(this);
     ui->displayMatrizes->setPlainText(textoMatriz);
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-QString MainWindow::stringMatrizAleatoria(QString string)
+void MainWindow::zoomIn(int level)
 {
-    int highRand = 20;
-    int lowRand = 0;
+    ui->zoomSlider->setValue(ui->zoomSlider->value() + level);
+}
 
-    QTime time = QTime::currentTime();
-    qsrand((uint)time.msec());
+void MainWindow::zoomOut(int level)
+{
+    ui->zoomSlider->setValue(ui->zoomSlider->value() - level);
+}
 
-    string += QString("A = [ \n \t");
+void MainWindow::setupMatrix()
+{
+    qreal scale = qPow(qreal(2), (ui->zoomSlider->value() - 250) / qreal(50));
 
-    for(int i = 0; i < 10; i++ ){
-        for(int j=0; j < 3; j++){
-           int x = (qrand() % ((highRand + 1) - lowRand) + lowRand);
-           string += QString::number(x);
-           if(j != 2) string += QString("\t");
-        }
-        string += QString("\n \t");
-
-    }
-    string += QString("\n ]");
-    return string;
+    QMatrix matrix;
+    matrix.scale(scale, scale);
+    this->setupMatrix();
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)

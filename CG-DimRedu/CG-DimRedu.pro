@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    planocartesiano.cpp
+    planocartesiano.cpp \
+    matrizes.cpp
 
 HEADERS  += mainwindow.h \
-    planocartesiano.h
+    planocartesiano.h \
+    matrizes.h
 
 FORMS    += mainwindow.ui

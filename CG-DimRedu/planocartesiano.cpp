@@ -1,12 +1,19 @@
 #include "planocartesiano.h"
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QColor>
 #include <QtOpenGL>
+#include <QWidget>
+
+
+class MainWindow;
 
 PlanoCartesiano::PlanoCartesiano(QWidget *parent) : QOpenGLWidget(parent)
 {
     eixoX = eixoY = eixoZ = 0;
+
 }
 
 PlanoCartesiano::~PlanoCartesiano()
@@ -117,10 +124,14 @@ void PlanoCartesiano::setRotacaoZ(int angulo)
         }
 }
 
+
 void PlanoCartesiano::draw()
 {
+    glColor3f(1.0, 0.0, 0.0);
+    glLineWidth(2.0);
     //eixo X
     glBegin(GL_LINES);
+
         glVertex3f(0,0,0);
         glVertex3f(1,0,0);
     glEnd();
@@ -168,11 +179,14 @@ void PlanoCartesiano::draw()
         glEnd();
     }
 
+
+    glPointSize(3.0);
+
     //Points
     glBegin(GL_POINTS);
-        glVertex3f(1,1,1);
-        glVertex3f(1, 5, 3);
-        glVertex3f(3,2,8);
+        for(int i = 0; i < 10; i++ ){
+                glVertex3f(matrix10x3[i][0], matrix10x3[i][1],matrix10x3[i][2]);
+        }
     glEnd();
 
 }

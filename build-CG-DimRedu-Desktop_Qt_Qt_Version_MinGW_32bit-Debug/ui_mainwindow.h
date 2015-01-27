@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -24,12 +25,14 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "planocartesiano.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -40,18 +43,15 @@ public:
     QAction *actionAleatoriamente;
     QAction *actionSobre;
     QWidget *centralWidget;
-    QGridLayout *gridLayout_2;
-    QHBoxLayout *LayoutSuperior;
-    QPushButton *botaoNormalizar;
-    QLabel *labelPlanodeExibicao;
-    QComboBox *boxExibicao;
-    QPushButton *botaoProjetar;
-    QSpacerItem *horizontalSpacer;
+    QGridLayout *gridLayout;
+    QFormLayout *formLayout;
+    QSlider *zoomSlider;
+    QLabel *label;
     QGridLayout *LayouMeio;
     QTabWidget *tabelaDeVisualizacao;
     QWidget *planoCartesiano;
     QHBoxLayout *horizontalLayout_2;
-    QWidget *widgetPlanCartesiao;
+    PlanoCartesiano *widgetPlanCartesiano;
     QWidget *matrizDados;
     QHBoxLayout *horizontalLayout;
     QPlainTextEdit *displayMatrizes;
@@ -59,6 +59,13 @@ public:
     QCheckBox *exibirCentroide;
     QCheckBox *exibirTodosDados;
     QSpacerItem *verticalSpacer;
+    QHBoxLayout *LayoutSuperior;
+    QPushButton *botaoNormalizar;
+    QLabel *labelPlanodeExibicao;
+    QComboBox *boxExibicao;
+    QPushButton *botaoProjetar;
+    QSpacerItem *horizontalSpacer;
+    QSpacerItem *verticalSpacer_2;
     QMenuBar *menuBar;
     QMenu *menuInserir_Dados;
     QMenu *menuSobre;
@@ -69,8 +76,8 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(675, 624);
-        MainWindow->setMinimumSize(QSize(568, 582));
+        MainWindow->resize(705, 649);
+        MainWindow->setMinimumSize(QSize(705, 649));
         actionDo_Arquivo = new QAction(MainWindow);
         actionDo_Arquivo->setObjectName(QStringLiteral("actionDo_Arquivo"));
         actionAleatoriamente = new QAction(MainWindow);
@@ -79,50 +86,36 @@ public:
         actionSobre->setObjectName(QStringLiteral("actionSobre"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        gridLayout_2 = new QGridLayout(centralWidget);
-        gridLayout_2->setSpacing(6);
-        gridLayout_2->setContentsMargins(11, 11, 11, 11);
-        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        LayoutSuperior = new QHBoxLayout();
-        LayoutSuperior->setSpacing(6);
-        LayoutSuperior->setObjectName(QStringLiteral("LayoutSuperior"));
-        botaoNormalizar = new QPushButton(centralWidget);
-        botaoNormalizar->setObjectName(QStringLiteral("botaoNormalizar"));
-        botaoNormalizar->setMinimumSize(QSize(93, 28));
-        botaoNormalizar->setMaximumSize(QSize(93, 28));
+        gridLayout = new QGridLayout(centralWidget);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        formLayout = new QFormLayout();
+        formLayout->setSpacing(6);
+        formLayout->setObjectName(QStringLiteral("formLayout"));
+        zoomSlider = new QSlider(centralWidget);
+        zoomSlider->setObjectName(QStringLiteral("zoomSlider"));
+        zoomSlider->setMaximum(500);
+        zoomSlider->setValue(250);
+        zoomSlider->setOrientation(Qt::Horizontal);
+        zoomSlider->setTickPosition(QSlider::TicksAbove);
 
-        LayoutSuperior->addWidget(botaoNormalizar);
+        formLayout->setWidget(0, QFormLayout::FieldRole, zoomSlider);
 
-        labelPlanodeExibicao = new QLabel(centralWidget);
-        labelPlanodeExibicao->setObjectName(QStringLiteral("labelPlanodeExibicao"));
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
 
-        LayoutSuperior->addWidget(labelPlanodeExibicao);
-
-        boxExibicao = new QComboBox(centralWidget);
-        boxExibicao->setObjectName(QStringLiteral("boxExibicao"));
-        boxExibicao->setMinimumSize(QSize(100, 0));
-        boxExibicao->setMaximumSize(QSize(100, 16777215));
-
-        LayoutSuperior->addWidget(boxExibicao);
-
-        botaoProjetar = new QPushButton(centralWidget);
-        botaoProjetar->setObjectName(QStringLiteral("botaoProjetar"));
-
-        LayoutSuperior->addWidget(botaoProjetar);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        LayoutSuperior->addItem(horizontalSpacer);
+        formLayout->setWidget(0, QFormLayout::LabelRole, label);
 
 
-        gridLayout_2->addLayout(LayoutSuperior, 0, 0, 1, 1);
+        gridLayout->addLayout(formLayout, 2, 0, 1, 1);
 
         LayouMeio = new QGridLayout();
         LayouMeio->setSpacing(6);
         LayouMeio->setObjectName(QStringLiteral("LayouMeio"));
         tabelaDeVisualizacao = new QTabWidget(centralWidget);
         tabelaDeVisualizacao->setObjectName(QStringLiteral("tabelaDeVisualizacao"));
-        tabelaDeVisualizacao->setMinimumSize(QSize(400, 400));
+        tabelaDeVisualizacao->setMinimumSize(QSize(493, 493));
         tabelaDeVisualizacao->setMaximumSize(QSize(16777215, 16777215));
         tabelaDeVisualizacao->setInputMethodHints(Qt::ImhNone);
         planoCartesiano = new QWidget();
@@ -131,17 +124,18 @@ public:
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        widgetPlanCartesiao = new QWidget(planoCartesiano);
-        widgetPlanCartesiao->setObjectName(QStringLiteral("widgetPlanCartesiao"));
+        widgetPlanCartesiano = new PlanoCartesiano(planoCartesiano);
+        widgetPlanCartesiano->setObjectName(QStringLiteral("widgetPlanCartesiano"));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(widgetPlanCartesiao->sizePolicy().hasHeightForWidth());
-        widgetPlanCartesiao->setSizePolicy(sizePolicy);
-        widgetPlanCartesiao->setFocusPolicy(Qt::WheelFocus);
-        widgetPlanCartesiao->setContextMenuPolicy(Qt::NoContextMenu);
+        sizePolicy.setHeightForWidth(widgetPlanCartesiano->sizePolicy().hasHeightForWidth());
+        widgetPlanCartesiano->setSizePolicy(sizePolicy);
+        widgetPlanCartesiano->setMinimumSize(QSize(391, 356));
+        widgetPlanCartesiano->setFocusPolicy(Qt::WheelFocus);
+        widgetPlanCartesiano->setContextMenuPolicy(Qt::NoContextMenu);
 
-        horizontalLayout_2->addWidget(widgetPlanCartesiao);
+        horizontalLayout_2->addWidget(widgetPlanCartesiano);
 
         tabelaDeVisualizacao->addTab(planoCartesiano, QString());
         matrizDados = new QWidget();
@@ -170,7 +164,7 @@ public:
 
         exibirTodosDados = new QCheckBox(centralWidget);
         exibirTodosDados->setObjectName(QStringLiteral("exibirTodosDados"));
-        exibirTodosDados->setMaximumSize(QSize(200, 16777215));
+        exibirTodosDados->setMaximumSize(QSize(148, 16777215));
 
         LayoutCheckBox->addWidget(exibirTodosDados);
 
@@ -182,12 +176,53 @@ public:
         LayouMeio->addLayout(LayoutCheckBox, 0, 1, 1, 1);
 
 
-        gridLayout_2->addLayout(LayouMeio, 1, 0, 1, 1);
+        gridLayout->addLayout(LayouMeio, 1, 0, 1, 1);
+
+        LayoutSuperior = new QHBoxLayout();
+        LayoutSuperior->setSpacing(6);
+        LayoutSuperior->setObjectName(QStringLiteral("LayoutSuperior"));
+        botaoNormalizar = new QPushButton(centralWidget);
+        botaoNormalizar->setObjectName(QStringLiteral("botaoNormalizar"));
+        botaoNormalizar->setMinimumSize(QSize(93, 28));
+        botaoNormalizar->setMaximumSize(QSize(93, 28));
+
+        LayoutSuperior->addWidget(botaoNormalizar);
+
+        labelPlanodeExibicao = new QLabel(centralWidget);
+        labelPlanodeExibicao->setObjectName(QStringLiteral("labelPlanodeExibicao"));
+        labelPlanodeExibicao->setEnabled(false);
+
+        LayoutSuperior->addWidget(labelPlanodeExibicao);
+
+        boxExibicao = new QComboBox(centralWidget);
+        boxExibicao->setObjectName(QStringLiteral("boxExibicao"));
+        boxExibicao->setEnabled(false);
+        boxExibicao->setMinimumSize(QSize(100, 0));
+        boxExibicao->setMaximumSize(QSize(100, 16777215));
+
+        LayoutSuperior->addWidget(boxExibicao);
+
+        botaoProjetar = new QPushButton(centralWidget);
+        botaoProjetar->setObjectName(QStringLiteral("botaoProjetar"));
+        botaoProjetar->setEnabled(false);
+
+        LayoutSuperior->addWidget(botaoProjetar);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        LayoutSuperior->addItem(horizontalSpacer);
+
+
+        gridLayout->addLayout(LayoutSuperior, 0, 0, 1, 1);
+
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer_2, 3, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 675, 26));
+        menuBar->setGeometry(QRect(0, 0, 705, 26));
         menuInserir_Dados = new QMenu(menuBar);
         menuInserir_Dados->setObjectName(QStringLiteral("menuInserir_Dados"));
         menuSobre = new QMenu(menuBar);
@@ -207,8 +242,9 @@ public:
         menuSobre->addAction(actionSobre);
 
         retranslateUi(MainWindow);
+        QObject::connect(zoomSlider, SIGNAL(valueChanged(int)), widgetPlanCartesiano, SLOT(setupMatrix()));
 
-        tabelaDeVisualizacao->setCurrentIndex(1);
+        tabelaDeVisualizacao->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -220,6 +256,12 @@ public:
         actionDo_Arquivo->setText(QApplication::translate("MainWindow", "Do Arquivo", 0));
         actionAleatoriamente->setText(QApplication::translate("MainWindow", "Aleatoriamente", 0));
         actionSobre->setText(QApplication::translate("MainWindow", "Sobre", 0));
+        label->setText(QApplication::translate("MainWindow", "Zoom", 0));
+        tabelaDeVisualizacao->setTabText(tabelaDeVisualizacao->indexOf(planoCartesiano), QApplication::translate("MainWindow", "Plano Cartesiano", 0));
+        displayMatrizes->setPlainText(QString());
+        tabelaDeVisualizacao->setTabText(tabelaDeVisualizacao->indexOf(matrizDados), QApplication::translate("MainWindow", "Matriz de Dados", 0));
+        exibirCentroide->setText(QApplication::translate("MainWindow", "Exibir Centroide", 0));
+        exibirTodosDados->setText(QApplication::translate("MainWindow", "Exibir todos os dados", 0));
         botaoNormalizar->setText(QApplication::translate("MainWindow", "Normalizar", 0));
         labelPlanodeExibicao->setText(QApplication::translate("MainWindow", "Planos de exibi\303\247\303\243o", 0));
         boxExibicao->clear();
@@ -229,11 +271,6 @@ public:
          << QApplication::translate("MainWindow", "AC", 0)
         );
         botaoProjetar->setText(QApplication::translate("MainWindow", "Projetar no Plano de Exibi\303\247\303\243o", 0));
-        tabelaDeVisualizacao->setTabText(tabelaDeVisualizacao->indexOf(planoCartesiano), QApplication::translate("MainWindow", "Plano Cartesiano", 0));
-        displayMatrizes->setPlainText(QString());
-        tabelaDeVisualizacao->setTabText(tabelaDeVisualizacao->indexOf(matrizDados), QApplication::translate("MainWindow", "Matriz de Dados", 0));
-        exibirCentroide->setText(QApplication::translate("MainWindow", "Exibir Centroide", 0));
-        exibirTodosDados->setText(QApplication::translate("MainWindow", "Exibir todos os dados", 0));
         menuInserir_Dados->setTitle(QApplication::translate("MainWindow", "Inserir Dados", 0));
         menuSobre->setTitle(QApplication::translate("MainWindow", "Ajuda", 0));
     } // retranslateUi
